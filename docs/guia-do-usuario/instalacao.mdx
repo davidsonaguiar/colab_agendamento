@@ -1,0 +1,47 @@
+---
+sidebar_position: 1
+title: Instalação
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Instalação
+
+<Tabs groupId="sistema-operacional">
+  <TabItem value="windows" label="Windows" default>
+
+```powershell
+winget install Biblioteca.App
+```
+
+  </TabItem>
+  <TabItem value="linux" label="Linux (Ubuntu)">
+
+```bash
+sudo apt install biblioteca-app
+```
+
+  </TabItem>
+</Tabs>
+
+
+## Diagrama de fluxo
+
+```mermaid
+flowchart LR
+    A["Professor abre «Criar trilha com IA»"] --> B["Escolhe o provedor e o modelo"]
+    B --> C["Inicia o chat com o pedido e o contexto"]
+    C --> D["Adiciona referências (opcional)"]
+    D --> E["IA gera a primeira versão da trilha"]
+    E --> F["Chat + prévia editável da trilha"]
+
+    F --> G["Professor pede mudanças pelo chat"]
+    G --> H["IA atualiza a trilha"]
+    H --> F
+
+    F --> I{"Professor está satisfeito?"}
+    I -- "Ainda não" --> G
+    I -- "Sim" --> J["Publicar trilha"]
+```
+
