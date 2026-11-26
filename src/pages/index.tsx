@@ -1,44 +1,52 @@
-import type {ReactNode} from 'react';
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
-import Heading from '@theme/Heading';
-
-import styles from './index.module.css';
-
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Ler a documentação
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
+import type {ReactNode} from 'react'
+import Link from '@docusaurus/Link'
+import Layout from '@theme/Layout'
+import Heading from '@theme/Heading'
+import styles from './index.module.css'
 
 export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
+      title="Início"
+      description="Documentação dos projetos de agendamento de espaços do COLAB/IFAL."
+    >
+      <main className={styles.main}>
+        <header className={styles.hero}>
+          <div className="container">
+            <p className={styles.eyebrow}>IFAL · Campus Maceió</p>
+            <Heading as="h1">Agendamento de espaços do COLAB</Heading>
+            <p className={styles.lead}>
+              Documentação do sistema que organiza solicitações de uso e reservas
+              dos espaços do laboratório.
+            </p>
+            <Link className="button button--primary button--lg" to="/docs/intro">
+              Abrir documentação
+            </Link>
+          </div>
+        </header>
+        <section className={`container ${styles.projects}`} aria-label="Projetos">
+          <article className={styles.card}>
+            <Heading as="h2">Para usuários</Heading>
+            <p>
+              Entenda como navegar pelos laboratórios, acessar sua conta e
+              acompanhar solicitações.
+            </p>
+            <Link to="/docs/guia-do-usuario/fluxo-de-agendamento">
+              Consultar o guia do usuário →
+            </Link>
+          </article>
+          <article className={styles.card}>
+            <Heading as="h2">Para desenvolvimento</Heading>
+            <p>
+              Consulte a arquitetura, a configuração local, as rotas da API e o
+              estado das integrações.
+            </p>
+            <Link to="/docs/desenvolvimento/arquitetura-integracao">
+              Consultar a documentação técnica →
+            </Link>
+          </article>
+        </section>
       </main>
     </Layout>
-  );
+  )
 }

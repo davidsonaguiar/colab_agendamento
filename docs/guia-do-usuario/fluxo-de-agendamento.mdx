@@ -1,0 +1,68 @@
+---
+sidebar_position: 2
+title: Laboratórios e solicitações
+description: Como explorar os laboratórios e entender o processo de solicitação.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Laboratórios e solicitações
+
+O frontend apresenta um catálogo de laboratórios, páginas de detalhes, etapas
+de agendamento e a área **Meus Agendamentos**. Para entrar nas páginas
+protegidas, autentique-se primeiro. Consulte [conta e acesso](./conta-e-acesso.mdx)
+se precisar criar uma conta ou recuperar a senha.
+
+<Tabs groupId="fluxo-solicitacao">
+  <TabItem value="interface" label="Na interface" default>
+
+1. Abra o catálogo de laboratórios.
+2. Selecione um laboratório para consultar seus detalhes.
+3. Use a tela de agendamento para visualizar os horários apresentados e preparar
+   as informações do pedido.
+4. Consulte **Meus Agendamentos** para acompanhar a área correspondente da
+   aplicação.
+
+O frontend contém dados demonstrativos para partes do catálogo, dos detalhes,
+dos horários e dos agendamentos. Confira o aviso abaixo antes de tratar uma
+ação nessas telas como uma operação persistida.
+
+  </TabItem>
+  <TabItem value="backend" label="No backend">
+
+Na API, um usuário autenticado com perfil global **Membro** pode enviar uma
+solicitação para `POST /solicitacoes/`. O pedido exige uma finalidade e pelo
+menos um horário futuro válido; ao ser criado, fica **Pendente**. Um
+**Administrador** ou o **Coordenador** do espaço pode analisar o pedido. O
+perfil **Monitor**, sozinho, não concede permissão para decidir solicitações.
+
+Quando uma aprovação é válida, o backend cria as reservas oficiais na mesma
+transação da decisão. Se algum horário conflitar com o funcionamento, uma pausa
+ou uma reserva confirmada, a solicitação continua pendente e nenhuma reserva
+parcial é criada. Os detalhes estão em
+[API, dados e estado das funcionalidades](../desenvolvimento/api-dados.mdx).
+
+  </TabItem>
+</Tabs>
+
+:::warning[Dados demonstrativos]
+Na versão consultada, as telas de catálogo, detalhes e agendamento do frontend
+mantêm dados demonstrativos. Não use a exibição ou o envio pela interface como
+comprovante de que uma solicitação foi gravada na API. O fluxo persistido
+descrito na aba **No backend** refere-se ao comportamento da API.
+:::
+
+## Papéis no sistema
+
+| Papel | Escopo confirmado |
+| --- | --- |
+| Membro | Cria solicitações e consulta as próprias solicitações. |
+| Administrador | Consulta e decide solicitações de qualquer espaço. |
+| Coordenador | Consulta e decide solicitações dos espaços em que está vinculado como Coordenador. |
+| Monitor | Vínculo local ao espaço; não recebe permissão para decidir solicitações apenas por esse papel. |
+
+Administrador e Membro são perfis globais. Coordenador e Monitor são vínculos
+locais, definidos por espaço. Para conferir as telas de autenticação, siga para
+[conta e acesso](./conta-e-acesso.mdx); para entender como a interface conversa
+com a API, veja [arquitetura e integração](../desenvolvimento/arquitetura-integracao.mdx).

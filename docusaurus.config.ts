@@ -5,11 +5,12 @@ import type * as Preset from '@docusaurus/preset-classic'
 const url = 'https://davidsonaguiar.github.io'
 const baseUrl = '/colab_agendamento/'
 const repositoryUrl = 'https://github.com/davidsonaguiar/colab_agendamento'
+const backendUrl = 'https://github.com/davidsonaguiar/agendamento_espacos'
+const frontendUrl = 'https://github.com/davidsonaguiar/agendamento_espacos_front'
 
 const config: Config = {
-  title: 'Colab Agendamento',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: 'COLAB Agendamento',
+  tagline: 'Gestão de espaços e solicitações de uso do COLAB',
   future: {
     v4: true,
   },
@@ -30,18 +31,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           editUrl: `${repositoryUrl}/tree/main/`,
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          editUrl:
-            `${repositoryUrl}/tree/main/packages/create-docusaurus/templates/shared/`,
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -49,29 +39,28 @@ const config: Config = {
     ],
   ],
   themeConfig: {
-    image: 'img/docusaurus-social-card.jpg',
     colorMode: {
       defaultMode: 'dark',
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Colab Agendamento',
-      logo: {
-        alt: 'Colab Agendamento Logo',
-        src: 'img/logo.svg',
-      },
+      title: 'COLAB Agendamento',
       items: [
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Documentação',
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
         { to: '/sobre', label: 'Sobre', position: 'left' },
         {
-          href: repositoryUrl,
-          label: 'GitHub',
+          href: frontendUrl,
+          label: 'Frontend',
+          position: 'right',
+        },
+        {
+          href: backendUrl,
+          label: 'Backend',
           position: 'right',
         },
       ],
@@ -83,43 +72,39 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Visão geral',
               to: '/docs/intro',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Projetos',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Frontend',
+              href: frontendUrl,
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'Backend',
+              href: backendUrl,
             },
           ],
         },
         {
-          title: 'More',
+          title: 'Desenvolvimento',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Arquitetura',
+              to: '/docs/desenvolvimento/arquitetura-integracao',
             },
             {
-              label: 'GitHub',
+              label: 'Site da documentação',
               href: repositoryUrl,
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Colab Agendamento, Inc. Built with Docusaurus.`,
+      copyright: `© ${new Date().getFullYear()} COLAB Agendamento — IFAL Campus Maceió.`,
     },
     prism: {
       theme: prismThemes.github,

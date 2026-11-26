@@ -1,0 +1,54 @@
+---
+sidebar_position: 3
+title: Conta e acesso
+description: Cadastro, login, sessão e recuperação de senha.
+---
+
+# Conta e acesso
+
+As telas públicas do frontend permitem entrar, cadastrar uma conta e iniciar a
+recuperação de senha. O catálogo e as páginas de agendamento ficam atrás de uma
+rota protegida.
+
+## Criar conta e entrar
+
+1. Na página de cadastro, informe os dados solicitados. O cadastro público cria
+   um usuário com perfil global **Membro**; não permite escolher perfil de
+   Administrador, Coordenador ou Monitor.
+2. Após o cadastro, acesse a página de login e informe sua identificação e senha.
+3. Para encerrar o acesso, use a opção de sair. O frontend limpa a sessão local
+   e solicita ao backend o encerramento da sessão.
+
+As rotas públicas incluem `/login`, `/cadastro` e `/recuperar-senha`. As rotas
+do catálogo, dos detalhes, do agendamento e de **Meus Agendamentos** exigem
+sessão válida. Se abrir uma rota protegida sem autenticação, entre com sua
+conta; após o login, o frontend pode retornar à página solicitada.
+
+## Recuperar senha
+
+1. Abra **Recuperar senha** e informe o endereço de e-mail associado à conta.
+2. Se o backend aceitar o pedido, siga o link enviado por e-mail.
+3. Informe uma nova senha e confirme-a. Ao concluir, entre novamente com a nova
+   senha.
+
+O sistema apresenta a mesma confirmação genérica para não revelar se um
+endereço está cadastrado. Se o link tiver expirado ou já tiver sido usado,
+solicite outro. A validação da tela exige senha com pelo menos oito caracteres.
+
+:::tip[Proteja seu acesso]
+Use uma senha que você não reutilize em outros serviços. Não compartilhe o
+link de redefinição: ele permite alterar a senha da conta.
+:::
+
+## Sessão e papéis
+
+O backend valida a identidade e o estado do usuário. O token de acesso é usado
+para autorizar as chamadas autenticadas; o token de renovação é mantido em
+cookie `HttpOnly`, não acessível ao JavaScript da página. Coordenador e Monitor
+são atribuídos a espaços específicos e não substituem os perfis globais
+Administrador e Membro.
+
+Para saber quais recursos dependem de dados demonstrativos, consulte
+[Laboratórios e solicitações](./fluxo-de-agendamento.mdx). A configuração das
+origens, cookies e proxy é descrita em
+[Execução local](../desenvolvimento/execucao-local.mdx).

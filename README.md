@@ -1,45 +1,32 @@
-# Website
+# Documentação do COLAB Agendamento
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+Site de documentação dos projetos de gestão e agendamento de espaços do
+Laboratório COLAB/IFAL:
 
-## Installation
+- [API backend](https://github.com/davidsonaguiar/agendamento_espacos)
+- [Aplicação web frontend](https://github.com/davidsonaguiar/agendamento_espacos_front)
 
-Requires Node.js 26 (LTS). If you use nvm, install and activate the version specified in `.nvmrc`:
+O site é construído com Docusaurus e publicado no GitHub Pages por meio do
+workflow em `.github/workflows/deploy.yml`.
 
-```bash
-nvm install 26
-nvm use 26
+## Desenvolvimento local
+
+Requer Node.js 26, conforme `.nvmrc`.
+
+```powershell
 npm ci
+npm run dev
 ```
 
-## Local Development
+O servidor local abre o site em `http://localhost:3000`. Os documentos ficam em
+`docs/`; a ordem das categorias da navegação é definida em `sidebars.ts`.
 
-```bash
-npm run start
-```
+## Verificação e build
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-## Build
-
-```bash
+```powershell
+npm run typecheck
 npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true npm run deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> npm run deploy
-```
-
-If you are using GitHub Pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+O build gera os arquivos estáticos em `build/` e falha quando encontra links
+internos quebrados.

@@ -1,0 +1,80 @@
+---
+sidebar_position: 2
+title: Execução local
+description: Pré-requisitos e comandos para executar o backend e o frontend.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Execução local
+
+Os projetos são mantidos em repositórios separados. Para seguir o fluxo
+completo, prepare primeiro o backend e depois o frontend. O backend requer
+Python 3.11 ou superior e Docker com Docker Compose; o frontend requer Node.js
+24 ou superior.
+
+<Tabs groupId="projeto-local">
+  <TabItem value="backend" label="Backend" default>
+
+Clone `agendamento_espacos`, abra o PowerShell na pasta do projeto e prepare
+ambiente e banco:
+
+Antes de iniciar a API, configure `URL_BANCO_DADOS`, `CHAVE_SECRETA` e as
+demais variáveis exigidas pelo ambiente (por exemplo, e-mail e Supabase, quando
+usados). Consulte o README do backend; não reutilize segredos publicados em
+arquivos de exemplo ou no Compose.
+
+```powershell title="Backend — PowerShell" {5}
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements-dev.txt
+docker-compose up -d db
+python -m uvicorn main:app --reload
+```
+
+  </TabItem>
+  <TabItem value="frontend" label="Frontend">
+
+Clone `agendamento_espacos_front`, copie o arquivo de ambiente de exemplo para
+`.env.local` e inicie o servidor:
+
+```powershell title="Frontend — PowerShell" {5}
+git clone https://github.com/davidsonaguiar/agendamento_espacos_front.git
+Set-Location agendamento_espacos_front
+Copy-Item .env.example .env.local
+npm ci
+npm run dev
+```
+
+O `.env.example` configura `VITE_API_URL` e `API_PROXY_TARGET`. O Vite usa a
+porta `5173` e encaminha `/usuarios`, `/espacos`, `/projetos`, `/solicitacoes`
+e `/agendamentos` ao backend, cuja porta local padrão é `8000`.
+
+  </TabItem>
+</Tabs>
+
+:::warning[Não exponha segredos]
+Variáveis com prefixo `VITE_` são incluídas no bundle do navegador. Nunca
+coloque senhas, chaves privadas ou `SUPABASE_SERVICE_ROLE_KEY` nelas. A chave
+de serviço do Supabase deve permanecer somente no ambiente seguro do backend.
+:::
+
+## Testes e produção
+
+No backend, instale as dependências de desenvolvimento e execute
+`python -m pytest`. No frontend, `npm test` roda os testes de unidade e de
+componentes; `npm run test:e2e` executa os testes de navegador, e `npm run build`
+gera o bundle de produção.
+
+O proxy definido no Vite existe somente durante `npm run dev`. Para publicar o
+frontend, configure um proxy reverso real para a API ou uma URL de API com CORS
+e cookies corretamente configurados. Consulte
+[arquitetura e integração](./arquitetura-integracao.mdx) e
+[API, dados e estado](./api-dados.mdx) antes de validar um ambiente integrado.
+
+:::note[URLs de referência]
+Em desenvolvimento local, o frontend fica em `http://localhost:5173`, a API em
+`http://localhost:8000` e a documentação interativa do FastAPI em
+`http://localhost:8000/docs` (Swagger UI) ou `/redoc` (ReDoc).
+:::

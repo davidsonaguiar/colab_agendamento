@@ -1,16 +1,39 @@
 ---
 sidebar_position: 1
-sidebar_label: Visão geral
-title: Sistema de Biblioteca
-description: Visão geral do Sistema de Biblioteca do IFAL.
+title: COLAB Agendamento
+description: Guia do sistema de gestão e agendamento dos espaços do COLAB/IFAL.
 ---
 
-# Sistema de Biblioteca
+# COLAB Agendamento
 
-O **Sistema de Biblioteca** controla o acervo, os empréstimos e as
-devoluções de livros de uma biblioteca escolar.
+O **COLAB Agendamento** reúne os projetos que apoiam a gestão dos espaços do
+Laboratório COLAB do Instituto Federal de Alagoas (IFAL), Campus Maceió. O
+backend centraliza usuários, espaços, projetos, solicitações e reservas. O
+frontend oferece a interface web para acesso ao sistema e consulta dos
+laboratórios.
 
-## Para quem é esta documentação
+![Tela de acesso do frontend do COLAB Agendamento em um monitor de mesa](/img/login-1366.png)
 
-- **Usuários:** consulte o [Guia do Usuário](./guia-do-usuario/instalacao.mdx).
-- **Desenvolvedores:** consulte o [repositório do projeto](https://github.com/davidsonaguiar/colab_agendamento).
+## O que você encontra aqui
+
+- No [guia de laboratórios e solicitações](./guia-do-usuario/fluxo-de-agendamento.mdx),
+  conheça as telas, os papéis e o fluxo de pedido de uso.
+- Em [conta e acesso](./guia-do-usuario/conta-e-acesso.mdx), veja como funcionam
+  cadastro, autenticação e recuperação de senha.
+- Para entender os componentes e seus limites, consulte
+  [arquitetura e integração](./desenvolvimento/arquitetura-integracao.mdx).
+- Siga as instruções de [execução local](./desenvolvimento/execucao-local.mdx)
+  para preparar os projetos no ambiente de desenvolvimento.
+
+:::note[Escopo e estado]
+Esta documentação descreve o código disponível nos repositórios consultados.
+Algumas telas do frontend usam dados demonstrativos; elas não significam que
+cada operação esteja integrada à API. As funcionalidades futuras são
+identificadas como tais.
+:::
+
+## Repositórios
+
+- [API backend — agendamento_espacos](https://github.com/davidsonaguiar/agendamento_espacos)
+- [Aplicação web — agendamento_espacos_front](https://github.com/davidsonaguiar/agendamento_espacos_front)
+- [Site desta documentação — colab_agendamento](https://github.com/davidsonaguiar/colab_agendamento)

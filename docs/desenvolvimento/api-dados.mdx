@@ -1,0 +1,81 @@
+---
+sidebar_position: 3
+title: API, dados e estado das funcionalidades
+description: Rotas, permissões, persistência e limites conhecidos do sistema.
+---
+
+# API, dados e estado das funcionalidades
+
+O backend FastAPI expõe documentação interativa em `/docs` (Swagger UI) e
+`/redoc` (ReDoc) quando está em execução. As rotas abaixo são relativas à
+origem da API, normalmente `http://localhost:8000`.
+
+## Rotas principais
+
+| Método | Rota | Acesso / finalidade |
+| --- | --- | --- |
+| `POST` | `/usuarios/login` | Autentica com identificação e senha. |
+| `POST` | `/usuarios/refresh` | Renova a sessão usando o cookie de atualização. |
+| `GET` | `/usuarios/me` | Retorna o usuário autenticado. |
+| `GET` | `/espacos/` | Consulta espaços conforme as permissões do usuário. |
+| `POST` | `/solicitacoes/` | Membro autenticado cria uma solicitação pendente. |
+| `GET` | `/solicitacoes/` | Lista solicitações conforme perfil e vínculo com espaços. |
+| `PATCH` | `/solicitacoes/{id_solicitacao}/decisao` | Administrador ou Coordenador autorizado aprova ou rejeita o pedido. |
+| `GET` | `/agendamentos/disponibilidade` | Consulta se um intervalo está disponível. |
+| `GET` | `/agendamentos/horarios-disponiveis` | Consulta horários livres dentro do limite da API. |
+
+As autorizações dependem do usuário autenticado e, para Coordenadores, do
+vínculo com o espaço da solicitação. Um Monitor não pode decidir pedidos
+somente por ser Monitor. Consulte a documentação interativa para os parâmetros
+e esquemas completos de cada endpoint.
+
+## Da solicitação à reserva
+
+1. Um Membro envia a finalidade e um ou mais horários futuros válidos.
+2. A API grava o pedido com estado **Pendente**.
+3. Um Administrador ou Coordenador autorizado decide aprovar ou rejeitar e
+   informa a justificativa.
+4. Antes de aprovar, a API verifica horários de funcionamento, pausas e
+   conflitos com reservas confirmadas.
+5. Se aprovada, a solicitação e suas reservas oficiais são persistidas na mesma
+   transação. Se houver conflito, o pedido continua pendente e não são mantidas
+   reservas parciais.
+
+Não há endpoint para criar uma reserva oficial diretamente: ela é criada a
+partir da aprovação de uma solicitação. O estado e os horários exibidos pelas
+telas demonstrativas do frontend não substituem essa confirmação da API.
+Consulte [Laboratórios e solicitações](../guia-do-usuario/fluxo-de-agendamento.mdx)
+para ver a diferença entre a interface e o comportamento persistido.
+
+## Banco e anexos
+
+O backend usa PostgreSQL e SQLAlchemy. A inicialização cria tabelas ausentes,
+mas `create_all` não altera automaticamente tabelas existentes nem substitui
+uma migração de schema. Antes de atualizar um banco já utilizado, siga as
+instruções de migração do
+[documento de banco de dados do backend](https://github.com/davidsonaguiar/agendamento_espacos/blob/main/docs/banco_dados.md).
+
+Anexos de solicitações aceitam PDF e DOCX com até 153.600 bytes. Os arquivos
+ficam em um bucket privado do Supabase Storage; o backend armazena metadados e
+caminho interno e gera links temporários para usuários autorizados.
+
+:::warning[Configuração privada]
+Configure `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e o bucket no ambiente
+seguro do backend. Não coloque a chave `service_role` no frontend, em variáveis
+`VITE_*` ou no controle de versão.
+:::
+
+## Limites que devem permanecer explícitos
+
+- A implementação atual cobre usuários, espaços, projetos, solicitações,
+  horários, anexos, interações e reservas oficiais.
+- Recursos podem ser vinculados a solicitações e reservas. Reservas
+  independentes de recursos seguem regras próprias de conflito.
+- Turnos de monitoria são uma funcionalidade futura.
+- No frontend consultado, catálogo, detalhes, horários e partes do fluxo de
+  agendamento incluem dados demonstrativos; a integração de autenticação não
+  significa que todas as telas estejam conectadas à API.
+
+Para configurar os dois serviços, siga [Execução local](./execucao-local.mdx).
+Para ver os componentes e o caminho das requisições, consulte
+[Arquitetura e integração](./arquitetura-integracao.mdx).

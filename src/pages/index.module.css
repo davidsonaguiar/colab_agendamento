@@ -1,23 +1,63 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
+.main {
+  min-height: calc(100vh - 3.75rem);
+}
 
-.heroBanner {
-  padding: 4rem 0;
+.hero {
+  padding: 5rem 0;
   text-align: center;
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(135deg, #e8f4f3, #f8fbfb);
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
+[data-theme='dark'] .hero {
+  background: linear-gradient(135deg, #10272a, #172f34);
+}
+
+.hero h1 {
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  color: var(--ifm-color-primary-darkest);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+[data-theme='dark'] .eyebrow {
+  color: var(--ifm-color-primary-light);
+}
+
+.lead {
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+  font-size: 1.2rem;
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.card {
+  padding: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius);
+  background: var(--ifm-background-surface-color);
+}
+
+.card h2 {
+  font-size: 1.35rem;
+}
+
+@media screen and (max-width: 700px) {
+  .hero {
+    padding: 3rem 1rem;
   }
-}
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .projects {
+    grid-template-columns: 1fr;
+  }
 }
