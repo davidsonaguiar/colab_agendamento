@@ -4,11 +4,13 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 
 ## Installation
 
-```bash
-npm install
-```
+Requires Node.js 26 (LTS). If you use nvm, install and activate the version specified in `.nvmrc`:
 
-**Note**: feel free to use the package manager of your choice.
+```bash
+nvm install 26
+nvm use 26
+npm ci
+```
 
 ## Local Development
 
